@@ -200,11 +200,12 @@ class GetGoodByName(generics.ListAPIView):
     permission_classes = ()
 
     def get(self, request, name):
+
         # queryset = Goods.objects.filter(name=name)
         # serializer = self.serializer_class(queryset, many=True)
         # return Response(serializer.data)
 
-        good = Goods.objects.filter(name=name)
+        good = Goods.objects.get(name=name)
 
         queryset = {}
 
