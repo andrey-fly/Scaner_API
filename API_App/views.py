@@ -51,16 +51,16 @@ class GoodsDetailView(BaseDetailView):
 
 
 # moderation goods rest view classes
-class GoodsCreateView(BaseCreateView):
+class GoodsOnModerationCreateView(BaseCreateView):
     serializer_class = ModerationGoodsDetailSerializer
 
 
-class GoodsListView(BaseListView):
+class GoodsOnModerationListView(BaseListView):
     serializer_class = ModerationGoodsListSerializer
     queryset = GoodsOnModeration.objects.all()
 
 
-class GoodsDetailView(BaseDetailView):
+class GoodsOnModerationDetailView(BaseDetailView):
     serializer_class = ModerationGoodsDetailSerializer
     queryset = GoodsOnModeration.objects.all()
 
