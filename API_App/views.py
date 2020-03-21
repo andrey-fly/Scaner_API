@@ -227,7 +227,7 @@ class GetGoodByName(generics.ListAPIView):
         queryset['positives'] = positives
         queryset['negatives'] = negatives
 
-        categories = good.category.get_family
+        categories = good.category.get_family()
         categories_list = []
         for category in categories:
             categories_list.append(category.name)
