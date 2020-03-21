@@ -77,6 +77,22 @@ class Comment(models.Model):
     author = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
 
+
+class GoodsOnModeration(models.Model):
+    name = models.TextField(verbose_name='Наименование', max_length=255)
+    image = models.ForeignKey(Picture, verbose_name='Изображение', on_delete=models.CASCADE)
+    barcode = models.TextField(verbose_name='Штрих-код', db_index=True, default=None, null=True)
+    STATUSES = [
+        (1, 'Принято на модерацию'),
+        (2, 'Обработано'),
+        (3, 'Отклонено'),
+    ]
+    status = models.CharField(verbose_name='Статус', max_length=25,
+                              choices=STATUSES, default=1)
+    user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+
+
 # class UserActions(models.Model):
 #     user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
 #     created = models.DateTimeField(verbose_name='Создано', auto_now_add=True)
