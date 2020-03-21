@@ -165,7 +165,7 @@ class SearchProduct(generics.ListAPIView):
         image_controller.delete_image()
 
         picture.save()
-        queryset['image'] = picture.file.url.split('&')
+        queryset['image'] = picture.file.url
 
         return Response(queryset)
 
@@ -192,3 +192,41 @@ class GetBarCode(generics.ListAPIView):
         image_controller.delete_image()
 
         return Response(queryset)
+
+
+class GetGoodByName(generics.ListAPIView):
+    serializer_class = GoodsListSerializer
+    queryset = Goods.objects.none()
+    permission_classes = ()
+
+    def get(self, request, name):
+        # queryset = Goods.objects.filter(name=name)
+        # serializer = self.serializer_class(queryset, many=True)
+        # return Response(serializer.data)
+
+        good = Goods.objects.filter(name=name)
+
+        queryset = {}
+
+        positives_q = Positive.objects.filter(good=good)
+        negatives_q = Negative.objects.filter(good=good)
+
+        positives = []
+        negatives = []
+
+        for item in positives_q:
+            positives.append(item.value)
+        for item in negatives_q:
+            negatives.append(item.value)
+
+        queryset['id'] = good.id
+        queryset['name'] = good.name
+        queryset['barcode'] = good.barcode
+        queryset['points'] = good.points_rusControl
+        queryset['positives'] = positives
+        queryset['negatives'] = negatives
+
+        return Response(queryset)
+
+
+
