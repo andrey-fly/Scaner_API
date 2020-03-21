@@ -165,7 +165,7 @@ class SearchProduct(generics.ListAPIView):
         image_controller.delete_image()
 
         picture.save()
-        queryset['image'] = picture.id
+        queryset['image'] = picture.file.url
 
         return Response(queryset)
 
