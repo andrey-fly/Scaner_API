@@ -40,6 +40,10 @@ urlpatterns = [
     path('positive/all/', PositiveListView.as_view()),
     path('positive/detail/<int:pk>/', PositiveDetailView.as_view()),
 
+    path('goods_on_moderation/create/', GoodsOnModerationCreateView.as_view()),
+    path('goods_on_moderation/all/', GoodsOnModerationListView.as_view()),
+    path('goods_on_moderation/detail/<int:pk>/', GoodsOnModerationDetailView.as_view()),
+
     path('goods/barcode/<str:barcode>/', GetByBarCode.as_view()),
     path('goods/get_product/', SearchProduct.as_view()),
 

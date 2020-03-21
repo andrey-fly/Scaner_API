@@ -2,12 +2,13 @@ from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from rest_framework.response import Response
 
-from API_App.models import Goods, Category, Picture, Negative, Positive
+from API_App.models import Goods, Category, Picture, Negative, Positive, GoodsOnModeration
 from API_App.permissions import IsOwnerOrReadOnly
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from API_App.serializer import GoodsDetailSerializer, GoodsListSerializer, CategoryDetailSerializer, \
     CategoryListSerializer, PictureDetailSerializer, PictureListSerializer, NegativeDetailSerializer, \
-    NegativeListSerializer, PositiveDetailSerializer, PositiveListSerializer
+    NegativeListSerializer, PositiveDetailSerializer, PositiveListSerializer, ModerationGoodsDetailSerializer, \
+    ModerationGoodsListSerializer
 from Modules.BarcodeDetector import BarcodeDetector
 from Modules.ImageController import ImageController
 
@@ -47,6 +48,21 @@ class GoodsListView(BaseListView):
 class GoodsDetailView(BaseDetailView):
     serializer_class = GoodsDetailSerializer
     queryset = Goods.objects.all()
+
+
+# moderation goods rest view classes
+class GoodsCreateView(BaseCreateView):
+    serializer_class = ModerationGoodsDetailSerializer
+
+
+class GoodsListView(BaseListView):
+    serializer_class = ModerationGoodsListSerializer
+    queryset = GoodsOnModeration.objects.all()
+
+
+class GoodsDetailView(BaseDetailView):
+    serializer_class = ModerationGoodsDetailSerializer
+    queryset = GoodsOnModeration.objects.all()
 
 
 # category rest view classes
