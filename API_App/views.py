@@ -226,6 +226,7 @@ class GetGoodByName(generics.ListAPIView):
         queryset['points'] = good.points_rusControl
         queryset['positives'] = positives
         queryset['negatives'] = negatives
+        queryset['categories'] = good.category.get_family
 
         return Response(queryset)
 
