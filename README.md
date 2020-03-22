@@ -1,7 +1,8 @@
-# Project Scanner
+q# Project Scanner
 
 ## Using Docker:
-*  [Installation for Linux (using Docker)](#installation_for_linux_docker)
+* 
+* [Installation for Linux (using Docker)](#installation_for_linux_docker)
 *  [Installation for MACOS (using Docker)](#installation_for_macos_docker)
 *  [Installation for Windows (using Docker)](#installation_for_windows_docker)
 ## **Not** Using Docker:

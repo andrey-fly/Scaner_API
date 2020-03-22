@@ -16,10 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from API_App.views import GoodsCreateView, GoodsListView, GoodsDetailView, GetByBarCode, SearchProduct, \
-    CategoryCreateView, CategoryListView, CategoryDetailView, PictureCreateView, PictureListView, PictureDetailView, \
-    NegativeCreateView, NegativeListView, NegativeDetailView, PositiveCreateView, PositiveDetailView, PositiveListView, \
-    GetBarCode
+from API_App.views import *
 
 urlpatterns = [
     path('goods/create/', GoodsCreateView.as_view()),
@@ -41,6 +38,10 @@ urlpatterns = [
     path('positive/create/', PositiveCreateView.as_view()),
     path('positive/all/', PositiveListView.as_view()),
     path('positive/detail/<int:pk>/', PositiveDetailView.as_view()),
+
+    path('comment/create/', CommentsCreateView.as_view()),
+    path('comment/all/', CommentsListView.as_view()),
+    path('comment/detail/<int:pk>/', CommentsDetailView.as_view()),
 
     path('goods/barcode/<str:barcode>/', GetByBarCode.as_view()),
     path('goods/get_product/', SearchProduct.as_view()),

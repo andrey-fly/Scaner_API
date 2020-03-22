@@ -71,13 +71,6 @@ class Negative(models.Model):
     updated = models.DateTimeField(verbose_name='Обновлено', auto_now=True)
 
 
-class Comment(models.Model):
-    text = models.TextField(verbose_name="Текст комментария", max_length=255)
-    good = models.ForeignKey(to=Goods, verbose_name='Продукт', on_delete=models.CASCADE)
-    author = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
-    created = models.DateTimeField(auto_now_add=True)
-
-
 class GoodsOnModeration(models.Model):
     name = models.TextField(verbose_name='Наименование', max_length=255)
     image = models.ForeignKey(Picture, verbose_name='Изображение', on_delete=models.CASCADE)
@@ -93,12 +86,19 @@ class GoodsOnModeration(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
 
+class Comment(models.Model):
+    value = models.TextField(verbose_name="Текст комментария", max_length=255)
+    good = models.ForeignKey(to=Goods, verbose_name='Продукт', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+
 # class UserActions(models.Model):
 #     user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
 #     created = models.DateTimeField(verbose_name='Создано', auto_now_add=True)
 #     status = models.BooleanField(verbose_name='Успех')
 #     target_good = models.ForeignKey(Goods, verbose_name='Товар', on_delete=models.CASCADE, null=True, default=None)
 #     uploaded_image = models.ForeignKey(Picture, verbose_name='Загруженное изображение', on_delete=models.CASCADE, null=True, default=None)
+
 
 
 

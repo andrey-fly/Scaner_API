@@ -103,7 +103,7 @@ DATABASES = {
     }
 }
 
-# # WITHOUT DOCKER
+# WITHOUT DOCKER
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
