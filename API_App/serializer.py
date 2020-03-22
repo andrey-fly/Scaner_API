@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from API_App.models import Goods, Picture, Category, Positive, Negative, Comment
+from API_App.models import Goods, Picture, Category, Positive, Negative, Comment, GoodsOnModeration
 
 
 class BaseDetailSerializer(serializers.ModelSerializer):
@@ -22,6 +22,20 @@ class GoodsDetailSerializer(BaseDetailSerializer):
 class GoodsListSerializer(BaseListSerializer):
     class Meta:
         model = Goods
+        fields = '__all__'
+
+
+# For moderation goods
+class ModerationGoodsDetailSerializer(BaseDetailSerializer):
+    class Meta:
+        model = GoodsOnModeration
+        fields = '__all__'
+        # fields = ('id', 'name', 'user')
+
+
+class ModerationGoodsListSerializer(BaseListSerializer):
+    class Meta:
+        model = GoodsOnModeration
         fields = '__all__'
 
 

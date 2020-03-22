@@ -2,13 +2,13 @@ from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from rest_framework.response import Response
 
-from API_App.models import Goods, Category, Picture, Negative, Positive, Comment
+from API_App.models import Goods, Category, Picture, Negative, Positive, Comment, GoodsOnModeration
 from API_App.permissions import IsOwnerOrReadOnly
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from API_App.serializer import GoodsDetailSerializer, GoodsListSerializer, CategoryDetailSerializer, \
     CategoryListSerializer, PictureDetailSerializer, PictureListSerializer, NegativeDetailSerializer, \
     NegativeListSerializer, PositiveDetailSerializer, PositiveListSerializer, CommentListSerializer, \
-    CommentDetailSerializer
+    CommentDetailSerializer, ModerationGoodsDetailSerializer, ModerationGoodsListSerializer
 from Modules.BarcodeDetector import BarcodeDetector
 from Modules.ImageController import ImageController
 
@@ -48,6 +48,21 @@ class GoodsListView(BaseListView):
 class GoodsDetailView(BaseDetailView):
     serializer_class = GoodsDetailSerializer
     queryset = Goods.objects.all()
+
+
+# moderation goods rest view classes
+class GoodsOnModerationCreateView(BaseCreateView):
+    serializer_class = ModerationGoodsDetailSerializer
+
+
+class GoodsOnModerationListView(BaseListView):
+    serializer_class = ModerationGoodsListSerializer
+    queryset = GoodsOnModeration.objects.all()
+
+
+class GoodsOnModerationDetailView(BaseDetailView):
+    serializer_class = ModerationGoodsDetailSerializer
+    queryset = GoodsOnModeration.objects.all()
 
 
 # category rest view classes
@@ -127,7 +142,7 @@ class CommentsDetailView(BaseDetailView):
 
 # any
 class GetByBarCode(generics.ListAPIView):
-    serializer_class = CommentListSerializer
+    serializer_class = GoodsListSerializer
     queryset = Goods.objects.none()
     permission_classes = ()
 
@@ -181,7 +196,7 @@ class SearchProduct(generics.ListAPIView):
         image_controller.delete_image()
 
         picture.save()
-        queryset['image'] = picture.id
+        queryset['image'] = picture.file.url
 
         return Response(queryset)
 
@@ -206,5 +221,47 @@ class GetBarCode(generics.ListAPIView):
             queryset['barcode'] = bar
 
         image_controller.delete_image()
+
+        return Response(queryset)
+
+
+class GetGoodByName(generics.ListAPIView):
+    serializer_class = GoodsListSerializer
+    queryset = Goods.objects.none()
+    permission_classes = ()
+
+    def get(self, request, name):
+
+        # queryset = Goods.objects.filter(name=name)
+        # serializer = self.serializer_class(queryset, many=True)
+        # return Response(serializer.data)
+
+        good = Goods.objects.get(name=name)
+
+        queryset = {}
+
+        positives_q = Positive.objects.filter(good=good)
+        negatives_q = Negative.objects.filter(good=good)
+
+        positives = []
+        negatives = []
+
+        for item in positives_q:
+            positives.append(item.value)
+        for item in negatives_q:
+            negatives.append(item.value)
+
+        queryset['id'] = good.id
+        queryset['name'] = good.name
+        queryset['barcode'] = good.barcode
+        queryset['points'] = good.points_rusControl
+        queryset['positives'] = positives
+        queryset['negatives'] = negatives
+
+        categories = good.category.get_ancestors(include_self=True)
+        categories_list = []
+        for category in categories:
+            categories_list.append(category.name)
+        queryset['categories'] = categories_list
 
         return Response(queryset)

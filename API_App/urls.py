@@ -22,6 +22,7 @@ urlpatterns = [
     path('goods/create/', GoodsCreateView.as_view()),
     path('goods/all/', GoodsListView.as_view()),
     path('goods/detail/<int:pk>/', GoodsDetailView.as_view()),
+    path('goods/get_by_name/<str:name>/', GetGoodByName.as_view()),
 
     path('category/create/', CategoryCreateView.as_view()),
     path('category/all/', CategoryListView.as_view()),
@@ -38,6 +39,10 @@ urlpatterns = [
     path('positive/create/', PositiveCreateView.as_view()),
     path('positive/all/', PositiveListView.as_view()),
     path('positive/detail/<int:pk>/', PositiveDetailView.as_view()),
+
+    path('goods_on_moderation/create/', GoodsOnModerationCreateView.as_view()),
+    path('goods_on_moderation/all/', GoodsOnModerationListView.as_view()),
+    path('goods_on_moderation/detail/<int:pk>/', GoodsOnModerationDetailView.as_view()),
 
     path('comment/create/', CommentsCreateView.as_view()),
     path('comment/all/', CommentsListView.as_view()),
