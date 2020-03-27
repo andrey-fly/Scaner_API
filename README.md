@@ -41,7 +41,7 @@ q# Project Scanner
     pip3 install -r requirements.txt
     
 ### 5. Install Docker
-    Install Docker from [https://www.docker.com](docker.com)
+    Install Docker from [docker](https://www.docker.com)
     (Don't forget about the registration)
     In application "Docker" needs to authorize
     
