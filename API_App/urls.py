@@ -18,6 +18,7 @@ from django.urls import path, include
 
 from API_App.views import *
 
+
 urlpatterns = [
     path('goods/create/', GoodsCreateView.as_view()),
     path('goods/all/', GoodsListView.as_view()),
@@ -44,12 +45,10 @@ urlpatterns = [
     path('goods_on_moderation/all/', GoodsOnModerationListView.as_view()),
     path('goods_on_moderation/detail/<int:pk>/', GoodsOnModerationDetailView.as_view()),
 
-    path('comment/create/', CommentsCreateView.as_view()),
-    path('comment/all/', CommentsListView.as_view()),
-    path('comment/detail/<int:pk>/', CommentsDetailView.as_view()),
-
     path('goods/barcode/<str:barcode>/', GetByBarCode.as_view()),
     path('goods/get_product/', SearchProduct.as_view()),
 
     path('getbarcode/', GetBarCode.as_view())
 ]
+
+

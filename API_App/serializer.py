@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from API_App.models import Goods, Picture, Category, Positive, Negative, Comment, GoodsOnModeration
+from API_App.models import Goods, Picture, Category, Positive, Negative, GoodsOnModeration
 
 
 class BaseDetailSerializer(serializers.ModelSerializer):
@@ -97,22 +97,4 @@ class NegativeDetailSerializer(BaseDetailSerializer):
 class NegativeListSerializer(BaseListSerializer):
     class Meta:
         model = Negative
-        fields = '__all__'
-
-
-# for comments characteristics
-class CommentDetailSerializer(BaseDetailSerializer):
-    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
-
-    class Meta:
-        model = Comment
-        fields = '__all__'
-
-    def create(self, validated_data):
-        return Negative.objects.create(**validated_data)
-
-
-class CommentListSerializer(BaseListSerializer):
-    class Meta:
-        model = Comment
         fields = '__all__'

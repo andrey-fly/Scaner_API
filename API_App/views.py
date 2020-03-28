@@ -2,13 +2,10 @@ from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication, BasicAuthentication
 from rest_framework.response import Response
 
-from API_App.models import Goods, Category, Picture, Negative, Positive, Comment, GoodsOnModeration
+from API_App.models import *
 from API_App.permissions import IsOwnerOrReadOnly
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from API_App.serializer import GoodsDetailSerializer, GoodsListSerializer, CategoryDetailSerializer, \
-    CategoryListSerializer, PictureDetailSerializer, PictureListSerializer, NegativeDetailSerializer, \
-    NegativeListSerializer, PositiveDetailSerializer, PositiveListSerializer, CommentListSerializer, \
-    CommentDetailSerializer, ModerationGoodsDetailSerializer, ModerationGoodsListSerializer
+from API_App.serializer import *
 from Modules.BarcodeDetector import BarcodeDetector
 from Modules.ImageController import ImageController
 
@@ -123,21 +120,6 @@ class PositiveListView(BaseListView):
 class PositiveDetailView(BaseDetailView):
     serializer_class = PositiveDetailSerializer
     queryset = Positive.objects.all()
-
-
-# positive characteristics rest view classes
-class CommentsCreateView(BaseCreateView):
-    serializer_class = CommentDetailSerializer
-
-
-class CommentsListView(BaseListView):
-    serializer_class = CommentListSerializer
-    queryset = Comment.objects.all()
-
-
-class CommentsDetailView(BaseDetailView):
-    serializer_class = CommentDetailSerializer
-    queryset = Comment.objects.all()
 
 
 # any
