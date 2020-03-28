@@ -239,6 +239,7 @@ class GetGoodByName(generics.ListAPIView):
         queryset['points'] = good.points_rusControl
         queryset['positives'] = positives
         queryset['negatives'] = negatives
+        queryset['image'] = good.file.url
 
         categories = good.category.get_ancestors(include_self=True)
         categories_list = []

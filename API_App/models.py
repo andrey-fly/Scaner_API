@@ -32,7 +32,7 @@ class Goods(models.Model):
     created = models.DateTimeField(verbose_name='Создано', auto_now_add=True)
     updated = models.DateTimeField(verbose_name='Обновлено', auto_now=True)
     user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
-    file = models.FileField(verbose_name='Ссылка на s3 хранилище', upload_to='photos', null=True)
+    file = models.ImageField(verbose_name='Ссылка на s3 хранилище', upload_to='photos', null=True)
     points_rusControl = models.CharField(verbose_name='Оценка Росконтроля',
                                          max_length=10, default='Не указано', null=True)
 
