@@ -28,6 +28,7 @@ urlpatterns = [
     path('category/create/', CategoryCreateView.as_view()),
     path('category/all/', CategoryListView.as_view()),
     path('category/detail/<int:pk>/', CategoryDetailView.as_view()),
+    path('category/filter/<str:name>/', CategoryFilterByName.as_view()),
 
     path('picture/create/', PictureCreateView.as_view()),
     path('picture/all/', PictureListView.as_view()),

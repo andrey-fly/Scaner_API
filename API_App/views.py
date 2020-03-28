@@ -247,3 +247,14 @@ class GetGoodByName(generics.ListAPIView):
         queryset['categories'] = categories_list
 
         return Response(queryset)
+
+
+class CategoryFilterByName(BaseListView):
+    serializer_class = CategoryListSerializer
+    queryset = []
+
+    def get(self, request, name):
+        queryset = Category.objects.get(name=name).get_children()
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+
