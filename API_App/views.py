@@ -243,7 +243,7 @@ class GetGoodByName(generics.ListAPIView):
         categories = good.category.get_ancestors(include_self=True)
         categories_list = []
         for category in categories:
-            categories_list.append(category.name)
+            categories_list.append(category.url_name)
         queryset['categories'] = categories_list
 
         return Response(queryset)
