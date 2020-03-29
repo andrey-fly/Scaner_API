@@ -7,6 +7,7 @@ User = get_user_model()
 
 class Category(MPTTModel):
     name = models.CharField(verbose_name='Наименование', max_length=128, unique=True)
+    url_name = models.CharField(verbose_name='url name', max_length=128, unique=True, default=None, null=True)
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
     created = models.DateTimeField(verbose_name='Создано', auto_now_add=True)
     updated = models.DateTimeField(verbose_name='Обновлено', auto_now=True)
