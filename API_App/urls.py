@@ -24,6 +24,7 @@ urlpatterns = [
     path('goods/all/', GoodsListView.as_view()),
     path('goods/detail/<int:pk>/', GoodsDetailView.as_view()),
     path('goods/get_by_name/<str:name>/', GetGoodByName.as_view()),
+    path('goods/get_by_category/<str:category_name>/', GetGoodByCategory.as_view()),
 
     path('category/create/', CategoryCreateView.as_view()),
     path('category/all/', CategoryListView.as_view()),

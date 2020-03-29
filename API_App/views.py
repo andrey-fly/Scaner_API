@@ -258,3 +258,16 @@ class CategoryFilterByName(BaseListView):
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)
 
+
+class GetGoodByCategory(BaseListView):
+    serializer_class = GoodsListSerializer
+    queryset = []
+
+    def get(self, request, category_name):
+        if Category.objects.filter(url_name=category_name):
+            category = Category.objects.get(url_name=category_name)
+            queryset = Goods.objects.filter(category=category)
+            serializer = self.serializer_class(queryset, many=True)
+            return Response(serializer.data)
+        else:
+            return Response(self.queryset)
