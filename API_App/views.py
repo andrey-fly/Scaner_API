@@ -254,7 +254,7 @@ class CategoryFilterByName(BaseListView):
     queryset = []
 
     def get(self, request, name):
-        queryset = Category.objects.get(name=name).get_children()
+        queryset = Category.objects.get(url_name=name).get_children()
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)
 
