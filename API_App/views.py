@@ -217,34 +217,37 @@ class GetGoodByName(generics.ListAPIView):
         # queryset = Goods.objects.filter(name=name)
         # serializer = self.serializer_class(queryset, many=True)
         # return Response(serializer.data)
+        try:
+            good = Goods.objects.get(name=name)
 
-        good = Goods.objects.get(name=name)
+            queryset = {}
 
-        queryset = {}
+            positives_q = Positive.objects.filter(good=good)
+            negatives_q = Negative.objects.filter(good=good)
 
-        positives_q = Positive.objects.filter(good=good)
-        negatives_q = Negative.objects.filter(good=good)
+            positives = []
+            negatives = []
 
-        positives = []
-        negatives = []
+            for item in positives_q:
+                positives.append(item.value)
+            for item in negatives_q:
+                negatives.append(item.value)
 
-        for item in positives_q:
-            positives.append(item.value)
-        for item in negatives_q:
-            negatives.append(item.value)
+            queryset['id'] = good.id
+            queryset['name'] = good.name
+            queryset['barcode'] = good.barcode
+            queryset['points'] = good.points_rusControl
+            queryset['positives'] = positives
+            queryset['negatives'] = negatives
+            queryset['image'] = good.file.url
 
-        queryset['id'] = good.id
-        queryset['name'] = good.name
-        queryset['barcode'] = good.barcode
-        queryset['points'] = good.points_rusControl
-        queryset['positives'] = positives
-        queryset['negatives'] = negatives
-
-        categories = good.category.get_ancestors(include_self=True)
-        categories_list = []
-        for category in categories:
-            categories_list.append(category.url_name)
-        queryset['categories'] = categories_list
+            categories = good.category.get_ancestors(include_self=True)
+            categories_list = []
+            for category in categories:
+                categories_list.append(category.url_name)
+            queryset['categories'] = categories_list
+        except Exception:
+            queryset = []
 
         return Response(queryset)
 
