@@ -29,7 +29,7 @@ class BaseDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = None
     queryset = []
     authentication_classes = (TokenAuthentication, SessionAuthentication, BasicAuthentication)
-    permission_classes = (IsAdminUser, )
+    permission_classes = (IsOwnerOrReadOnly, )
 
 
 # goods rest view classes
