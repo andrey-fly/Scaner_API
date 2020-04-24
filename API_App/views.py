@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from API_App.serializer import *
 from Modules.BarcodeDetector import BarcodeDetector
 from Modules.ImageController import ImageController
-
+from django.contrib.postgres.search import SearchVector
 from django.contrib.auth.models import User
 
 
@@ -29,7 +29,7 @@ class BaseDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = None
     queryset = []
     authentication_classes = (TokenAuthentication, SessionAuthentication, BasicAuthentication)
-    permission_classes = (IsOwnerOrReadOnly, )
+    permission_classes = (IsOwnerOrReadOnly,)
 
 
 # goods rest view classes
@@ -274,3 +274,18 @@ class GetGoodByCategory(BaseListView):
             return Response(serializer.data)
         else:
             return Response(self.queryset)
+
+
+class SearchStrGood(BaseListView):
+    serializer_class = GoodsListSerializer
+    queryset = []
+
+    def get(self, request, search_str):
+        queryset = Goods.objects.annotate(
+            search=SearchVector('name', 'category'),
+
+        ).filter(search=search_str)
+        # queryset = Goods.objects.filter(name__search=search_str)
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+

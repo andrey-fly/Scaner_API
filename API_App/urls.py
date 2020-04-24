@@ -50,7 +50,8 @@ urlpatterns = [
     path('goods/barcode/<str:barcode>/', GetByBarCode.as_view()),
     path('goods/get_product/', SearchProduct.as_view()),
 
-    path('getbarcode/', GetBarCode.as_view())
+    path('getbarcode/', GetBarCode.as_view()),
+    path('goods/search/<str:search_str>', SearchStrGood.as_view())
 ]
 
 
